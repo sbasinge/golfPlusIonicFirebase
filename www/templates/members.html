@@ -1,0 +1,17 @@
+<ion-view view-title="Members">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="member in members" href="#/app/member/{{member.id}}">
+        <div class="list card">
+
+          <div class="item item-body item-avatar-left">
+            <img src="{{member.avatar}}">
+            <h2>{{member.firstName}} {{member.lastName}}</h2>
+            <p>Handicap: {{member.handicap}}</p>
+          </div>
+
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,15 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Add Pairing</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModalSave()">Save</button>
+      <button class="button button-clear" ng-click="closeModalNoSave()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <input type="text" placeholder="Enter pairing name" ng-model="pairing.name">
+    <ion-list>
+        <ion-checkbox ng-repeat="member in members"ng-model="member.selected">{{member.firstName}} {{member.lastName}}</ion-checkbox>
+    </ion-list>
+  </ion-content>
+</ion-modal-view>

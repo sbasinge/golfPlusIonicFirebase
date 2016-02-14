@@ -1,0 +1,19 @@
+<ion-view view-title="ScoreCard">
+  <ion-content>
+    <h2>{{scorecard.member.firstName}} - {{scorecard.course.name}}</h2>
+    <p> at {{scorecard.course.teetime}}</p>
+    <ion-list>
+      <ion-item>
+        <div class="bar bar-header bar-positive">
+          <span class="col-33">Hole</span>
+          <span class="col-33">Par</span>
+          <span class="col-33">Score</span>
+        </div>
+      </ion-item>
+      <ion-item ng-repeat="score in scorecard.scores" class="row">
+        <span class="col-33">{{score.holeNumber}}</span>
+        <span class="col-33">4</span>
+        <span class="col-33">{{score.score}}</span>
+    </ion-item>
+  </ion-content>
+</ion-view>
