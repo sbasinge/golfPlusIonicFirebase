@@ -116,7 +116,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.analytic
         }
       })
       .state('app.scorecard', {
-        url: '/scorecard/:scorecardId',
+        url: '/scorecard/:teetimeId/:memberId',
         views: {
           'menuContent': {
             templateUrl: 'templates/scorecard.html',

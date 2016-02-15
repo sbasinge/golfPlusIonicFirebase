@@ -14,7 +14,10 @@
       root: root,
       members: root.child('members'),
       items: root.child('items'),
-      courses: root.child('courses')
+      courses: root.child('courses'),
+      teetimes: root.child('teetimes'),
+      pairings: root.child('pairings'),
+      scorecards: root.child('scorecards')
     };
 
   }

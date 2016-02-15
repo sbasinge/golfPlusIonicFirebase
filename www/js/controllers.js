@@ -93,7 +93,7 @@ angular.module('starter.controllers', [])
       teetime.course = Courses.getById(teetime.courseId);
     });
   })
-  .controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, Teetimes, Courses, Pairings, Members, Scorecards) {
+  .controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, Teetimes, Courses, Pairings, Members, scorecardService) {
     $scope.teetime = Teetimes.getById($stateParams.teetimeId);
     $scope.teetime.course = Courses.getById($scope.teetime.courseId);
     $scope.teetime.pairings = Pairings.findAllByTeetimeId($scope.teetime.id);
@@ -115,8 +115,7 @@ angular.module('starter.controllers', [])
       _.each($scope.members,function(member){
         if (member.selected) {
           //create a scorecard for all the holes on the course
-          var scorecard = Scorecards.add($scope.teetime, member);
-
+          var scorecard = scorecardService.add($scope.teetime, member);
           $scope.pairing.players.push({memberId: member.id, name: member.firstName, courseIndex: 14, totalScore: 0, scorecardId: scorecard.id});
         }
       });
@@ -142,10 +141,10 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('ScorecardCtrl', function ($scope, $stateParams, Scorecards, Courses, Members) {
+  .controller('ScorecardCtrl', function ($scope, $stateParams, scorecardService, Courses, Members) {
     console.log($stateParams);
     //expect a scorecardId which should get you courseId, member, etc
-    var scorecard = Scorecards.getById($stateParams.scorecardId);
+    var scorecard = scorecardService.getByTeetimeAndMemberIds($stateParams.teetimeId, $stateParams.memberId);
     var course = Courses.getById(scorecard.courseId);
     var player = Members.getById(scorecard.memberId);
     scorecard.course = course;

@@ -1,7 +1,7 @@
 angular.module('starter.services', [])
 .factory('Courses', Courses)
   .factory('Pairings', Pairings)
-  .factory('Scorecards', Scorecards)
+  //.factory('Scorecards', Scorecards)
   .factory('Members', Members)
   .factory('Teetimes', Teetimes)
 ;
@@ -63,6 +63,7 @@ function Pairings() {
 }
 
 
+/*
 function Scorecards() {
   var _nextId  = 7;
   var _scorecards = [];
@@ -99,6 +100,7 @@ function Scorecards() {
     return newScorecard;
   }
 }
+*/
 function Members() {
   var service = {
     list: list,
