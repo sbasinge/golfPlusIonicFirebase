@@ -1,4 +1,4 @@
-angular.module('starter.filters', [])
+angular.module('golfplus.filters', [])
   .filter('getById', function() {
   return function(input, id) {
     var i=0, len=input.length;

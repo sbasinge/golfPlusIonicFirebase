@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('golfplus.controllers', [])
 
   .controller('AppCtrl', function ($rootScope, $scope, $ionicModal, Auth) {
 
@@ -80,20 +80,13 @@ angular.module('starter.controllers', [])
   .controller('MemberCtrl', function ($scope, $stateParams, Members) {
     $scope.member = Members.getById($stateParams.memberId);
   })
-  .controller('CoursesCtrl', function ($scope, Courses, Teetimes) {
-    $scope.courses = Courses.list();
-    _.each($scope.courses,function(course){
-      course.teetime = Teetimes.findAllByCourseId(course.courseId);
-    });
-
-  })
   .controller('TeetimesCtrl', function ($scope, Teetimes, Courses) {
     $scope.teetimes = Teetimes.list();
     _.each($scope.teetimes,function(teetime){
       teetime.course = Courses.getById(teetime.courseId);
     });
   })
-  .controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, Teetimes, Courses, Pairings, Members, scorecardService) {
+  .controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, Teetimes, Courses, Pairings, Members, Scorecards) {
     $scope.teetime = Teetimes.getById($stateParams.teetimeId);
     $scope.teetime.course = Courses.getById($scope.teetime.courseId);
     $scope.teetime.pairings = Pairings.findAllByTeetimeId($scope.teetime.id);
@@ -112,11 +105,18 @@ angular.module('starter.controllers', [])
     $scope.closeModalSave = function() {
       //TODO get all selected members and create pairing, add it to the teetime
 
+      var list = Scorecards.list();
       _.each($scope.members,function(member){
         if (member.selected) {
           //create a scorecard for all the holes on the course
-          var scorecard = scorecardService.add($scope.teetime, member);
-          $scope.pairing.players.push({memberId: member.id, name: member.firstName, courseIndex: 14, totalScore: 0, scorecardId: scorecard.id});
+          var scorecard = Scorecards.add($scope.teetime, member);
+          list.$add(scorecard).then(function(ref) {
+            var id = ref.key();
+            scorecard.id = id;
+            console.log("added scorecard with id " + id);
+            list.$indexFor(id); // returns location in the array
+            $scope.pairing.players.push({memberId: member.id, name: member.firstName, courseIndex: 14, totalScore: 0, scorecardId: scorecard.id});
+          });
         }
       });
       Pairings.add($scope.pairing);
@@ -133,18 +133,10 @@ angular.module('starter.controllers', [])
     });
   })
 
-  .controller('CourseCtrl', function ($scope, $stateParams, Courses, Pairings) {
-    console.log($stateParams);
-    $scope.course = Courses.getById($stateParams.courseId);
-    //$scope.pairings = Pairings.getByCourseId($stateParams.courseId);
-    //for each pairing add the scorecard
-
-  })
-
   .controller('ScorecardCtrl', function ($scope, $stateParams, scorecardService, Courses, Members) {
     console.log($stateParams);
     //expect a scorecardId which should get you courseId, member, etc
-    var scorecard = scorecardService.getByTeetimeAndMemberIds($stateParams.teetimeId, $stateParams.memberId);
+    var scorecard = scorecardService.getById($stateParams.scorecardId).then();
     var course = Courses.getById(scorecard.courseId);
     var player = Members.getById(scorecard.memberId);
     scorecard.course = course;
