@@ -1,5 +1,5 @@
 (function() {
   'use strict';
 
-  angular.module('starter.core', []);
+  angular.module('golfplus.core', []);
 })();

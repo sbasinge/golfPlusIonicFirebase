@@ -1,0 +1,69 @@
+<ion-view view-title="Add Course">
+  <ion-content>
+    <div class="list">
+
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Name" ng-model="course.name">
+        </label>
+      </div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Address" ng-model="course.address">
+        </label>
+      </div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Phone" ng-model="course.phone">
+        </label>
+      </div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="WebSite" ng-model="course.website">
+        </label>
+      </div>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="ImageUrl" ng-model="course.image">
+        </label>
+      </div>
+
+      TeeSets
+      Holes
+
+      <button class="button button-small" ng-click="save()">
+        Save
+      </button>
+
+    </div>
+    <h1>{{course.name}}</h1>
+    <p>{{course.teetime}}</p>
+    <ion-list>
+      <ion-item ng-repeat="pairing in pairings">
+        <div class="list card">
+            <ion-item>
+              <div class="bar bar-header bar-positive">
+                <h1 class="title">Group {{pairing.id}}</h1>
+              </div>
+            </ion-item>
+
+            <ion-item>
+              <div class="bar bar-header bar-positive">
+                <span class="col-33">Name</span>
+                <span class="col-33">Index</span>
+                <span class="col-33">Total</span>
+              </div>
+
+            </ion-item>
+              <ion-item ng-repeat="player in pairing.players" class="row">
+                <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.name}}</a>  </span>
+                <span class="col col-33">{{player.courseIndex}}</span>
+                <span class="col col-33">{{player.totalScore}}</span>
+              </ion-item>
+
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

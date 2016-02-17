@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('starter.core')
+    .module('golfplus.core')
     .factory('firebaseDataService', firebaseDataService);
 
   firebaseDataService.$inject = ['FIREBASE_URL'];

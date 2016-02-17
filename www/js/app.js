@@ -8,6 +8,7 @@ angular.module('golfplus', [
     'firebase',
     'golfplus.config',
     'firebase.auth',
+    'golfplus.core',
     'golfplus.course',
     //'golfplus.security',
     //'golfplus.home',

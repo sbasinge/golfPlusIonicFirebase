@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('starter.core')
+    .module('golfplus.core')
     .factory('scorecardService', scorecardService);
 
   scorecardService.$inject = ['$firebaseArray', 'firebaseDataService', '$firebaseObject'];
