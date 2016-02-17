@@ -2,31 +2,36 @@
   <ion-content>
     <button ui-sref="app.newcourse">Add</button>
     <ion-list>
-      <ion-item ng-repeat="course in courses" href="#/app/courses/{{course.uid}}">
+      <ion-item ng-repeat="course in courses" href="#/app/courses/{{course.$id}}">
         <div class="list card">
           <div class="item item-body">
             <img src="{{course.image}}">
             <h2>{{course.name}}</h2>
+            <h2>{{course.phone}}</h2>
             <p><a href="{{course.website}}" target="_blank">Website</a></p>
             <p><a href="{{course.directions}}" target="_blank">Directions</a></p>
           </div>
           <div class="item item-body" ng-repeat="teeset in course.teesets">
-            <h2>{{teeset.name}} - {{teeset.slope}}/{{teeset.courseRating}}</h2>
+            <h2>{{teeset.name}} - {{teeset.slope}}/{{teeset.rating}}</h2>
+<!--
+            <ion-item>
+              <div class="bar bar-header bar-positive">
+                <span class="col-25">Hole</span>
+                <span class="col-25">Par</span>
+                <span class="col-25">Yards</span>
+                <span class="col-25">Handicap</span>
+              </div>
+
+            </ion-item>
+            <ion-item ng-repeat="hole in teeset.holes" class="row">
+              <span class="col col-25">{{hole.number}}</span>
+              <span class="col col-25">{{hole.par}}</span>
+              <span class="col col-25">{{hole.yards}}</span>
+              <span class="col col-25">{{hole.handicap}}</span>
+            </ion-item>
           </div>
+-->
 
-          <ion-item>
-            <div class="bar bar-header bar-positive">
-              <span class="col-33">Hole</span>
-              <span class="col-33">Par</span>
-              <span class="col-33">Handicap</span>
-            </div>
-
-          </ion-item>
-          <ion-item ng-repeat="hole in course.holes" class="row">
-            <span class="col col-33">{{hole.holeNumber}}</span>
-            <span class="col col-33">{{hole.par}}</span>
-            <span class="col col-33">{{hole.handicap}}</span>
-          </ion-item>
 
         </div>
       </ion-item>

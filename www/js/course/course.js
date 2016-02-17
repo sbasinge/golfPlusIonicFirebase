@@ -13,6 +13,7 @@
   }]);
 
   app.controller('CourseCtrl', function ($scope, $stateParams, Pairings, course, $firebaseArray, firebaseDataService) {
+    console.info('Entering CourseCtrl with course '+JSON.stringify(course));
     $scope.course = course;
     $scope.courses = $firebaseArray(firebaseDataService.courses);
 
@@ -47,15 +48,15 @@
       this.image = '';
 
       this.teesets = [new Teeset('white', 123, 70.2)];
-      this.holes = [new Hole(1, 4, 3, 375)];
       this.new = true;
     }
 
     function Teeset(name, slope, rating) {
-      // Public properties, assigned to the instance ('this')
       this.name = name;
       this.slope = slope;
       this.rating = rating;
+      this.holes = [new Hole(1, 4, 3, 375),new Hole(2, 4, 3, 375),new Hole(3, 4, 3, 375),new Hole(4, 4, 3, 375),new Hole(5, 4, 3, 375),new Hole(6, 4, 3, 375),new Hole(7, 4, 3, 375),new Hole(8, 4, 3, 375),new Hole(9, 4, 3, 375),
+        new Hole(10, 4, 3, 375),new Hole(11, 4, 3, 375),new Hole(12, 4, 3, 375),new Hole(13, 4, 3, 375),new Hole(14, 4, 3, 375),new Hole(15, 4, 3, 375),new Hole(16, 4, 3, 375),new Hole(17, 4, 3, 375),new Hole(18, 4, 3, 375)];
     }
 
     function Hole(number, par, handicap, yards) {
@@ -79,8 +80,14 @@
     }
 
     function getById(courseId) {
-      return _.findWhere(list(), {id: +courseId});
+      //return _.findWhere(list(), {id: +courseId});
       //return $filter('getById')(list(), courseId);
+      //var list = $firebaseArray(firebaseDataService.courses);
+      var rec = list().$loaded().then(
+        function(x){
+          return x.$getRecord(courseId);
+        }); // record with $id
+      return rec;
     }
 
   }]);
@@ -102,6 +109,13 @@
             templateUrl: 'js/course/course.html',
             controller: 'CourseCtrl'
           }
+        },
+        cache: false,
+        resolve: {
+          course: function (Courses, $stateParams) {
+            console.debug($stateParams);
+            return Courses.getById($stateParams.courseId);
+          }
         }
       })
       .state('app.newcourse', {
@@ -112,11 +126,12 @@
             controller: 'CourseCtrl'
           }
         },
+        cache: false,
         resolve: {
-          course: ['Courses', function (Courses) {
+          course: function (Courses) {
             var temp = new Courses.Course();
             return temp;
-          }]
+          }
         }
       });
 
