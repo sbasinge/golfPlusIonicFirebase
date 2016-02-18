@@ -1,7 +1,19 @@
 <ion-view view-title="Teetime">
   <ion-content>
-    <h1>{{teetime.course.name}}</h1>
-    <p>{{teetime.date}} @ {{teetime.time}}</p>
+    <div class="list">
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Select a course:
+        </div>
+        <select ng-model="teetime.courseId">
+          <option ng-repeat="option in allCourses" value="{{option.$id}}">{{option.name}}</option>
+        </select>
+      </label>
+
+    </div>
+    <h1>{{teetime.courseId}}</h1>
+    <p>{{teetime.playDate}} @ {{teetime.time}}</p>
     <button ng-click="openModal()">Add Pairing</button>
     <ion-list>
       <ion-item ng-repeat="pairing in teetime.pairings">

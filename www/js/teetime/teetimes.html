@@ -1,7 +1,9 @@
 <ion-view view-title="Tee Times">
   <ion-content>
+    <button ui-sref="app.newteetime">Add</button>
+
     <ion-list>
-      <ion-item ng-repeat="teetime in teetimes" href="#/app/teetimes/{{teetime.id}}">
+      <ion-item ng-repeat="teetime in teetimes" href="#/app/teetimes/{{teetime.$id}}">
         <div class="list card">
 
           <div class="item item-body">

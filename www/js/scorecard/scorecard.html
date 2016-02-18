@@ -13,7 +13,16 @@
       <ion-item ng-repeat="score in scorecard.scores" class="row">
         <span class="col-33">{{score.holeNumber}}</span>
         <span class="col-33">4</span>
-        <span class="col-33">{{score.score}}</span>
+        <span class="col-33">
+              <div class="list">
+
+                <div class="item item-input-inset">
+                  <label class="item-input-wrapper">
+                    <input type="number" placeholder="Name" ng-model="score.score" ng-change="update(score)">
+                  </label>
+                </div>
+
+        </span>
     </ion-item>
   </ion-content>
 </ion-view>

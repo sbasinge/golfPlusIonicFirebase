@@ -1,7 +1,7 @@
 (function (angular) {
   "use strict";
 
-  var app = angular.module('golfplus.course', ['firebase.utils', 'firebase', 'golfplus.core']);
+  var app = angular.module('golfplus.course', ['firebase.utils', 'firebase', 'golfplus.core','golfplus.teetime']);
 
   app.controller('CoursesCtrl', ['$scope', 'Courses', 'Teetimes', function ($scope, Courses, Teetimes) {
     $scope.courses = Courses.list();
@@ -80,9 +80,7 @@
     }
 
     function getById(courseId) {
-      //return _.findWhere(list(), {id: +courseId});
-      //return $filter('getById')(list(), courseId);
-      //var list = $firebaseArray(firebaseDataService.courses);
+      //$firebaseObject(firebaseDataService.courses.child(courseId));
       var rec = list().$loaded().then(
         function(x){
           return x.$getRecord(courseId);

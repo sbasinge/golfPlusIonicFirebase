@@ -9,7 +9,9 @@ angular.module('golfplus', [
     'golfplus.config',
     'firebase.auth',
     'golfplus.core',
+    'golfplus.teetime',
     'golfplus.course',
+    'golfplus.scorecard',
     //'golfplus.security',
     //'golfplus.home',
     //'golfplus.account',
@@ -67,33 +69,6 @@ angular.module('golfplus', [
           'menuContent': {
             templateUrl: 'templates/member.html',
             controller: 'MemberCtrl'
-          }
-        }
-      })
-      .state('app.teetimes', {
-        url: '/teetimes',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/teetimes.html',
-            controller: 'TeetimesCtrl'
-          }
-        }
-      })
-      .state('app.teetime', {
-        url: '/teetimes/:teetimeId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/teetime.html',
-            controller: 'TeetimeCtrl'
-          }
-        }
-      })
-      .state('app.scorecard', {
-        url: '/scorecard/:scorecardId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/scorecard.html',
-            controller: 'ScorecardCtrl'
           }
         }
       })
