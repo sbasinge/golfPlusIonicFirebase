@@ -1,7 +1,7 @@
 (function (angular) {
   "use strict";
 
-  var app = angular.module('golfplus.course', ['firebase.utils', 'firebase', 'golfplus.core','golfplus.teetime']);
+  var app = angular.module('golfplus.course', ['firebase', 'golfplus.core','golfplus.teetime']);
 
   app.controller('CoursesCtrl', ['$scope', 'Courses', 'Teetimes', function ($scope, Courses, Teetimes) {
     $scope.courses = Courses.list();
@@ -25,9 +25,7 @@
     };
   });
 
-  app.factory('Courses', ['fbutil', '$firebaseArray', 'firebaseDataService', function (fbutil, $firebaseArray, firebaseDataService) {
-    //var ref = fbutil.ref('courses').limitToLast(10);
-    //return $firebaseArray(ref);
+  app.factory('Courses', function ($firebaseArray, firebaseDataService) {
 
     var service = {
       list: list,
@@ -88,7 +86,7 @@
       return rec;
     }
 
-  }]);
+  });
 
   app.config(['$stateProvider', function ($stateProvider) {
     $stateProvider.state('app.courses', {

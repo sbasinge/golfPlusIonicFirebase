@@ -3,6 +3,9 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
-    "ionic-platform-web-client": "~0.2.1"
+    "ionic-platform-web-client": "~0.2.1",
+    "firebase": "~2.4.1",
+    "underscore": "^1.8.3",
+    "angularfire": "^1.1.3"
   }
 }

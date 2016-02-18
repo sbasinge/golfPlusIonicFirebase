@@ -7,7 +7,7 @@ angular.module('golfplus', [
     'ionic.service.analytics',
     'firebase',
     'golfplus.config',
-    'firebase.auth',
+    //'firebase.auth',
     'golfplus.core',
     'golfplus.teetime',
     'golfplus.course',
@@ -21,6 +21,11 @@ angular.module('golfplus', [
     'golfplus.services',
     'golfplus.filters'
   ])
+  .factory("Auth", function($firebaseAuth) {
+    var usersRef = new Firebase("https//boiling-torch-3772.firebaseio.com/users");
+    return $firebaseAuth(usersRef);
+  })
+
   .run(function($ionicPlatform, $ionicAnalytics) {
     $ionicPlatform.ready(function() {
       $ionicAnalytics.register();

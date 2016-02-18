@@ -1,9 +1,9 @@
 (function (angular) {
   "use strict";
 
-  var app = angular.module('golfplus.teetime', ['firebase.utils', 'firebase', 'golfplus.core']);
+  var app = angular.module('golfplus.teetime', ['firebase', 'golfplus.core']);
 
-  app.factory('Teetimes', function (fbutil, $firebaseArray, firebaseDataService, $q) {
+  app.factory('Teetimes', function ($firebaseArray, firebaseDataService, $q) {
 
     var service = {
       list: list,
