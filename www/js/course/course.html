@@ -21,8 +21,8 @@
             </ion-item>
               <ion-item ng-repeat="player in pairing.players" class="row">
                 <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.name}}</a>  </span>
-                <span class="col col-33">{{player.courseIndex}}</span>
-                <span class="col col-33">{{player.totalScore}}</span>
+                <span class="col col-33">{{player.scorecard.courseIndex}}</span>
+                <span class="col col-33">{{player.scorecard.totalScore}}</span>
               </ion-item>
 
         </div>

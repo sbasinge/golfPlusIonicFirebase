@@ -38,7 +38,11 @@
       newScorecard.memberId = member.id;
       newScorecard.courseId = course.$id;
       newScorecard.teeset = teeset.name;
-      _.each(teeset.holes, function (hole) {
+      newScorecard.courseIndex = 14;
+      newScorecard.totalScore = 0;
+      newScorecard.name = member.firstName;
+
+        _.each(teeset.holes, function (hole) {
         newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: 0});
       });
       return list().$add(newScorecard);

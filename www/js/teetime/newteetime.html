@@ -20,12 +20,6 @@
         <div class="list card">
           <ion-item>
             <div class="bar bar-header bar-positive">
-              <h1 class="title">Group {{pairing.id}}</h1>
-            </div>
-          </ion-item>
-
-          <ion-item>
-            <div class="bar bar-header bar-positive">
               <span class="col-33">Name</span>
               <span class="col-33">Index</span>
               <span class="col-33">Total</span>
@@ -33,9 +27,9 @@
 
           </ion-item>
           <ion-item ng-repeat="player in pairing.players" class="row">
-            <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.name}}</a>  </span>
-            <span class="col col-33">{{player.courseIndex}}</span>
-            <span class="col col-33">{{player.totalScore}}</span>
+            <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.scorecard.name}}</a>  </span>
+            <span class="col col-33">{{player.scorecard.courseIndex}}</span>
+            <span class="col col-33">{{player.scorecard.totalScore}}</span>
           </ion-item>
 
         </div>

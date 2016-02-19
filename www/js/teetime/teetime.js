@@ -63,13 +63,9 @@
     });
   });
 
-  app.controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, teetime, Courses, Pairings, Members, Scorecards, Teetimes, $q) {
+  app.controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, teetime, Courses, Pairings, Members, Scorecards, Teetimes, $q, $state) {
     $scope.teetime = teetime;
-    _.each(teetime.pairings,function(pairing) { //populate player scorecards for the page
-      _.each(pairing.players,function(player){
-        player.scorecard = Scorecards.getById(player.scorecardId);
-      });
-    });
+    loadPlayerScorecardsForTeetime($scope.teetime);
     $scope.allCourses = Courses.list();
     $scope.allTeetimes = Teetimes.list();
     $scope.course = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
@@ -77,6 +73,14 @@
 
     $scope.members = Members.list();
 
+    function loadPlayerScorecardsForTeetime(teetime) {
+      _.each(teetime.pairings,function(pairing) { //populate player scorecards for the page
+        _.each(pairing.players,function(player){
+          player.scorecard = Scorecards.getById(player.scorecardId);
+        });
+      });
+
+    }
     $ionicModal.fromTemplateUrl('js/teetime/pairing-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -97,15 +101,11 @@
           //create a scorecard for all the holes on the course
           scorecardPromises.push(Scorecards.add(selectedCourse, teeset, member).then(function(scorecard){
             pairing.players.push({
-              memberId: member.id,
-              name: member.firstName,
-              courseIndex: 14,
-              totalScore: 0,
               scorecardId: scorecard.key()
             });
 
           }));
-
+          member.selected = false;
         }
       });
       //deferred.resolve(pairing);
@@ -122,8 +122,17 @@
 
       createPairingForSelectedMembers(selectedCourse, teeset).then(function(pairing){
         $scope.teetime.pairings.push(pairing);
-        $scope.allTeetimes.$add($scope.teetime);
-        $scope.pairingModal.hide();
+        if (!$scope.teetime.$id) { //redirect unsaved teetimes to teetime edit page
+          $scope.allTeetimes.$add($scope.teetime).then(function(addedTeetime){
+            console.log('added teetime id '+addedTeetime.key());
+            $state.go('app.teetime',{teetimeId:addedTeetime.key()});
+          });
+        } else {
+          $scope.allTeetimes.$save($scope.teetime).then(function(updatedTeetime){
+            loadPlayerScorecardsForTeetime($scope.teetime);
+            $scope.pairingModal.hide();
+          });
+        }
       });
     };
 
@@ -171,7 +180,7 @@
         }
       })
       .state('app.newteetime', {
-        url: '/teetime/create',
+        url: '/teetimes/create',
         views: {
           'menuContent': {
             templateUrl: 'js/teetime/newteetime.html',
