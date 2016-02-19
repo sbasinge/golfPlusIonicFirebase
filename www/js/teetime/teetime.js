@@ -39,15 +39,6 @@
 
     function getById(teetimeId) {
       var deferred = $q.defer();
-/*
-      var rec = list().$getRecord(teetimeId);
-      if (rec) {
-        console.log("Got post", rec);
-        deferred.resolve(rec);
-      } else {
-        deferred.reject("Teetime with key:" + teetimeId + " not found.");
-      }
-*/
       list().$loaded().then(
         function(x){
           deferred.resolve(x.$getRecord(teetimeId));
@@ -72,12 +63,18 @@
     });
   });
 
-  app.controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, teetime, Courses, Pairings, Members, Scorecards, Teetimes) {
+  app.controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, teetime, Courses, Pairings, Members, Scorecards, Teetimes, $q) {
     $scope.teetime = teetime;
+    _.each(teetime.pairings,function(pairing) { //populate player scorecards for the page
+      _.each(pairing.players,function(player){
+        player.scorecard = Scorecards.getById(player.scorecardId);
+      });
+    });
     $scope.allCourses = Courses.list();
     $scope.allTeetimes = Teetimes.list();
     $scope.course = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
     //$scope.teetime.pairings = Pairings.findAllByTeetimeId($scope.teetime.$id);
+
     $scope.members = Members.list();
 
     $ionicModal.fromTemplateUrl('js/teetime/pairing-modal.html', {
@@ -89,31 +86,47 @@
     $scope.openModal = function () {
       $scope.pairingModal.show();
     };
-    $scope.closeModalSave = function () {
-      //TODO get all selected members and create pairing, add it to the teetime
-      var selectedCourse = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
-      var teeset = selectedCourse.teesets[0]; //TODO select one?
+
+    function createPairingForSelectedMembers(selectedCourse, teeset) {
+      var deferred = $q.defer();
+
       var pairing = {name: '', players: []};
-      $scope.teetime.pairings.push(pairing);
+      var scorecardPromises = [];
       _.each($scope.members, function (member) {
         if (member.selected) {
           //create a scorecard for all the holes on the course
-          Scorecards.add(selectedCourse, teeset, member).then(function(ref){
+          scorecardPromises.push(Scorecards.add(selectedCourse, teeset, member).then(function(scorecard){
             pairing.players.push({
               memberId: member.id,
               name: member.firstName,
               courseIndex: 14,
               totalScore: 0,
-              scorecardId: ref.key()
+              scorecardId: scorecard.key()
             });
 
-          });
+          }));
+
         }
       });
+      //deferred.resolve(pairing);
+      $q.all(scorecardPromises).then(function(){
+        deferred.resolve(pairing);
+      });
+      return deferred.promise;
+    }
 
-      $scope.allTeetimes.$add($scope.teetime);
-      $scope.pairingModal.hide();
+    $scope.closeModalSave = function () {
+      //TODO get all selected members and create pairing, add it to the teetime
+      var selectedCourse = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
+      var teeset = selectedCourse.teesets[0]; //TODO select one?
+
+      createPairingForSelectedMembers(selectedCourse, teeset).then(function(pairing){
+        $scope.teetime.pairings.push(pairing);
+        $scope.allTeetimes.$add($scope.teetime);
+        $scope.pairingModal.hide();
+      });
     };
+
     $scope.closeModalNoSave = function () {
       $scope.pairingModal.hide();
     };
