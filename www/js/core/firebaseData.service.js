@@ -8,16 +8,16 @@
   firebaseDataService.$inject = ['FIREBASE_URL'];
 
   function firebaseDataService(FIREBASE_URL) {
-    var root = new Firebase(FIREBASE_URL);
+    var db = new Firebase(FIREBASE_URL);
 
     return {
-      root: root,
-      members: root.child('members'),
-      items: root.child('items'),
-      courses: root.child('courses'),
-      teetimes: root.child('teetimes'),
-      pairings: root.child('pairings'),
-      scorecards: root.child('scorecards')
+      db: db,
+      members: db.child('members'),
+      items: db.child('items'),
+      courses: db.child('courses'),
+      teetimes: db.child('teetimes'),
+      pairings: db.child('pairings'),
+      scorecards: db.child('scorecards')
     };
 
   }

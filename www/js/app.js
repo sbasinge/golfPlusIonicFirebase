@@ -3,8 +3,8 @@
 // Declare app level module which depends on filters, and services
 angular.module('golfplus', [
     'ionic',
-    'ionic.service.core',
-    'ionic.service.analytics',
+    //'ionic.service.core',
+    //'ionic.service.analytics',
     'firebase',
     'golfplus.config',
     //'firebase.auth',
@@ -26,9 +26,9 @@ angular.module('golfplus', [
     return $firebaseAuth(usersRef);
   })
 
-  .run(function($ionicPlatform, $ionicAnalytics) {
+  .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-      $ionicAnalytics.register();
+      //$ionicAnalytics.register();
 
       if(window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -43,11 +43,11 @@ angular.module('golfplus', [
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
-      var settings = new Ionic.IO.Settings();
-      console.log(JSON.stringify(settings));
+      //var settings = new Ionic.IO.Settings();
+      //console.log(JSON.stringify(settings));
 
       // kick off the platform web client
-      Ionic.io();
+      //Ionic.io();
 
     });
   })

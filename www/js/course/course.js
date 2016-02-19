@@ -12,20 +12,28 @@
 
   }]);
 
-  app.controller('CourseCtrl', function ($scope, $stateParams, Pairings, course, $firebaseArray, firebaseDataService) {
-    console.info('Entering CourseCtrl with course '+JSON.stringify(course));
+  app.controller('CourseCtrl', function ($scope, course, firebaseDataService, $state) {
+    //console.info('Entering CourseCtrl with course '+JSON.stringify(course));
     $scope.course = course;
-    $scope.courses = $firebaseArray(firebaseDataService.courses);
 
-    $scope.save = function() {
-      console.log('Saving '+JSON.stringify(course));
-      $scope.courses.$add(course);
-      //if it's new then make a firebarse ref out of it
-      //call $save
+    $scope.save = function(thisCourse) {
+      var courseRef = firebaseDataService.courses.child(thisCourse.name);
+      courseRef.once("value", function(snapshot) {
+        if (!snapshot.exists()) {
+          courseRef.set(thisCourse);
+          $state.go('app.course',{courseId:thisCourse.name});
+        } else {
+          console.warn('This course already exits');
+          //thisCourse.teesets[0].rating += 1;
+          //thisCourse.teesets[0].holes[0].yards=320;
+          thisCourse.$save();
+        }
+      });
     };
+
   });
 
-  app.factory('Courses', function ($firebaseArray, firebaseDataService) {
+  app.factory('Courses', function ($firebaseArray, firebaseDataService, $firebaseObject) {
 
     var service = {
       list: list,
@@ -78,12 +86,8 @@
     }
 
     function getById(courseId) {
-      //$firebaseObject(firebaseDataService.courses.child(courseId));
-      var rec = list().$loaded().then(
-        function(x){
-          return x.$getRecord(courseId);
-        }); // record with $id
-      return rec;
+      var courseRef = firebaseDataService.courses.child(courseId);
+      return $firebaseObject(courseRef);
     }
 
   });
@@ -110,7 +114,8 @@
         resolve: {
           course: function (Courses, $stateParams) {
             console.debug($stateParams);
-            return Courses.getById($stateParams.courseId);
+            var temp = Courses.getById($stateParams.courseId);
+            return temp;
           }
         }
       })
