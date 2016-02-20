@@ -6,14 +6,17 @@
       <ion-item ng-repeat="teetime in teetimes" href="#/app/teetimes/{{teetime.$id}}">
         <div class="list card">
 
-          <div class="item item-body">
-            <img src="{{teetime.course.image}}">
-            <h2>{{teetime.course.name}}</h2>
+          <div class="item item-body" >
+              <img src="{{teetime.course.image}}" >
+            <h2 >{{teetime.course.name}}</h2>
+          </div>
+
+
+            <p><a href="tel:{{teetime.course.phone}}">{{teetime.course.phone}}</a></p>
             <p>{{teetime.playDate}} @ {{teetime.time}}</p>
             <p><a href="{{teetime.course.website}}" target="_blank">Website</a></p>
             <p><a href="{{teetime.course.directions}}" target="_blank">Directions</a></p>
 
-          </div>
 
         </div>
       </ion-item>

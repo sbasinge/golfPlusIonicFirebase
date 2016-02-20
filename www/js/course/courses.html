@@ -7,10 +7,10 @@
           <div class="item item-body">
             <img src="{{course.image}}">
             <h2>{{course.name}}</h2>
-            <h2>{{course.phone}}</h2>
+          </div>
+          <h2><a href="tel:{{course.phone}}">{{course.phone}}</a></h2>
             <p><a href="{{course.website}}" target="_blank">Website</a></p>
             <p><a href="https://www.google.com/maps?q={{course.address}}" target="_blank">Directions</a></p>
-          </div>
           <div class="item item-body" ng-repeat="teeset in course.teesets">
             <h2>{{teeset.name}} - {{teeset.slope}}/{{teeset.rating}}</h2>
           </div>
