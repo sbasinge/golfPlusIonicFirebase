@@ -30,12 +30,23 @@
         </label>
       </div>
 
-      <button class="button button-small" ng-click="save(course)">
+      <button class="button button-positive" ng-click="save(course)">
         Save
       </button>
 
       <div class="item item-body" ng-repeat="teeset in course.teesets">
-      <h2>{{teeset.name}} - {{teeset.slope}}/{{teeset.rating}}</h2>
+      <h2>{{teeset.name}}</h2>
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Slope</span>
+            <input type="text" ng-model="teeset.slope">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Rating</span>
+            <input type="text" ng-model="teeset.rating">
+          </label>
+        </div>
+\
       <ion-item>
         <div class="bar bar-header bar-positive">
           <span class="col-25">Hole</span>
@@ -47,11 +58,20 @@
       </ion-item>
       <ion-item ng-repeat="hole in teeset.holes" class="row">
         <span class="col col-25">{{hole.number}}</span>
-        <span class="col col-25">{{hole.par}}</span>
-        <span class="col col-25">{{hole.yards}}</span>
-        <span class="col col-25">{{hole.handicap}}</span>
+        <label class="col col-25 item item-input">
+          <input type="text" ng-model="hole.par">
+        </label>
+        <label class="col col-25 item item-input">
+          <input type="text" ng-model="hole.yards">
+        </label>
+        <label class="col col-25 item item-input">
+          <input type="text" ng-model="hole.handicap">
+        </label>
       </ion-item>
     </div>
+      <button class="button button-positive" ng-click="save(course)">
+        Save
+      </button>
 
     <!--
         <ion-list>

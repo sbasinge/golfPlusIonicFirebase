@@ -19,3 +19,10 @@ Verify Scorecard updates
 Add gross/net over/under par to each score
 Add over/under gross/net to pairings leaderboard
 Add SASS and theme a bit
+
+
+## Build
+
+npm install
+bower install
+ionic serve
