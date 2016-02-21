@@ -1,5 +1,6 @@
 <ion-view view-title="Course">
   <ion-content>
+
     <h1>{{course.name}}</h1>
 
     <div class="list">
@@ -30,77 +31,57 @@
         </label>
       </div>
 
-      <button class="button button-positive" ng-click="save(course)">
-        Save
-      </button>
+      <ion-list>
+        <div ng-repeat="teeset in course.teesets">
+          <ion-item class="item-stable"
+                    ng-click="toggleHoles(teeset)"
+                    ng-class="{active: areHolesShown(teeset)}">
+            <i class="icon" ng-class="areHolesShown(teeset) ? 'ion-minus' : 'ion-plus'"></i>&nbsp;{{teeset.name}}
 
-      <div class="item item-body" ng-repeat="teeset in course.teesets">
-      <h2>{{teeset.name}}</h2>
-        <div class="list">
-          <label class="item item-input">
-            <span class="input-label">Slope</span>
-            <input type="text" ng-model="teeset.slope">
-          </label>
-          <label class="item item-input">
-            <span class="input-label">Rating</span>
-            <input type="text" ng-model="teeset.rating">
-          </label>
-        </div>
-\
-      <ion-item>
-        <div class="bar bar-header bar-positive">
-          <span class="col-25">Hole</span>
-          <span class="col-25">Par</span>
-          <span class="col-25">Yards</span>
-          <span class="col-25">Handicap</span>
-        </div>
-
-      </ion-item>
-      <ion-item ng-repeat="hole in teeset.holes" class="row">
-        <span class="col col-25">{{hole.number}}</span>
-        <label class="col col-25 item item-input">
-          <input type="text" ng-model="hole.par">
-        </label>
-        <label class="col col-25 item item-input">
-          <input type="text" ng-model="hole.yards">
-        </label>
-        <label class="col col-25 item item-input">
-          <input type="text" ng-model="hole.handicap">
-        </label>
-      </ion-item>
-    </div>
-      <button class="button button-positive" ng-click="save(course)">
-        Save
-      </button>
-
-    <!--
-        <ion-list>
-          <ion-item ng-repeat="pairing in pairings">
-            <div class="list card">
-                <ion-item>
-                  <div class="bar bar-header bar-positive">
-                    <h1 class="title">Group {{pairing.id}}</h1>
-                  </div>
-                </ion-item>
-
-                <ion-item>
-                  <div class="bar bar-header bar-positive">
-                    <span class="col-33">Name</span>
-                    <span class="col-33">Index</span>
-                    <span class="col-33">Total</span>
-                  </div>
-
-                </ion-item>
-                  <ion-item ng-repeat="player in pairing.players" class="row">
-                    <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.name}}</a>  </span>
-                    <span class="col col-33">{{player.scorecard.courseIndex}}</span>
-                    <span class="col col-33">{{player.scorecard.totalScore}}</span>
-                  </ion-item>
-
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">Slope</span>
+                <input type="text" ng-model="teeset.slope">
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Rating</span>
+                <input type="text" ng-model="teeset.rating">
+              </label>
             </div>
           </ion-item>
-        </ion-list>
-    -->
 
+          <div class="item-accordion" ng-show="areHolesShown(teeset)">
+            <ion-item>
+              <div class="bar bar-header bar-positive">
+                <span class="col-25">Hole</span>
+                <span class="col-25">Par</span>
+                <span class="col-25">Yards</span>
+                <span class="col-25">Handicap</span>
+              </div>
+            </ion-item>
+
+            <ion-item class="row" ng-repeat="hole in teeset.holes">
+              <span class="col col-25">{{hole.number}}</span>
+              <label class="col col-25 item item-input">
+                <input type="text" ng-model="hole.par">
+              </label>
+              <label class="col col-25 item item-input">
+                <input type="text" ng-model="hole.yards">
+              </label>
+              <label class="col col-25 item item-input">
+                <input type="text" ng-model="hole.handicap">
+              </label>
+            </ion-item>
+
+          </div>
+        </div>
+      </ion-list>
+    </div>
   </ion-content>
+  <ion-footer-bar class="bar-stable">
+    <div class="buttons">
+      <button class="button button-positive" ng-click="save(course)"> Save</button>
+    </div>
+  </ion-footer-bar>
+
 </ion-view>

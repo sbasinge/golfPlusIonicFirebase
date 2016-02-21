@@ -3,7 +3,7 @@
 
   var app = angular.module('golfplus.teetime', ['firebase', 'golfplus.core']);
 
-  app.factory('Teetimes', function ($firebaseArray, firebaseDataService, $q) {
+  app.factory('Teetimes', function ($firebaseArray, firebaseDataService, $firebaseObject) {
 
     var service = {
       list: list,
@@ -38,12 +38,8 @@
     }
 
     function getById(teetimeId) {
-      var deferred = $q.defer();
-      list().$loaded().then(
-        function(x){
-          deferred.resolve(x.$getRecord(teetimeId));
-        }); // record with $id
-      return deferred.promise;
+      var ref = firebaseDataService.teetimes.child(teetimeId);
+      return $firebaseObject(ref);
     }
 
     function findAllByCourseId(courseId) {
@@ -69,6 +65,9 @@
     $scope.allCourses = Courses.list();
     $scope.allTeetimes = Teetimes.list();
     $scope.course = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
+    $scope.selectedCourseId = null;
+    $scope.selectedTeeset = null;
+
     //$scope.teetime.pairings = Pairings.findAllByTeetimeId($scope.teetime.$id);
 
     $scope.members = Members.list();
@@ -91,15 +90,15 @@
       $scope.pairingModal.show();
     };
 
-    function createPairingForSelectedMembers(selectedCourse, teeset) {
+    function createPairingForSelectedMembers(selectedCourse, teeset, teetime) {
       var deferred = $q.defer();
 
-      var pairing = {name: '', players: []};
+      var pairing = {players: []};
       var scorecardPromises = [];
       _.each($scope.members, function (member) {
         if (member.selected) {
           //create a scorecard for all the holes on the course
-          scorecardPromises.push(Scorecards.add(selectedCourse, teeset, member).then(function(scorecard){
+          scorecardPromises.push(Scorecards.add(selectedCourse, teeset, member, teetime).then(function(scorecard){
             pairing.players.push({
               scorecardId: scorecard.key()
             });
@@ -108,7 +107,6 @@
           member.selected = false;
         }
       });
-      //deferred.resolve(pairing);
       $q.all(scorecardPromises).then(function(){
         deferred.resolve(pairing);
       });
@@ -120,29 +118,37 @@
       var selectedCourse = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
       var teeset = selectedCourse.teesets[0]; //TODO select one?
 
-      createPairingForSelectedMembers(selectedCourse, teeset).then(function(pairing){
-        $scope.teetime.pairings.push(pairing);
         if (!$scope.teetime.$id) { //redirect unsaved teetimes to teetime edit page
           $scope.allTeetimes.$add($scope.teetime).then(function(addedTeetime){
             console.log('added teetime id '+addedTeetime.key());
-            $state.go('app.teetime',{teetimeId:addedTeetime.key()});
+            createPairingForSelectedMembers(selectedCourse, teeset, addedTeetime).then(function(pairing){
+              $scope.teetime.pairings.push(pairing);
+              $state.go('app.teetime',{teetimeId:addedTeetime.key()});
+            });
           });
         } else {
           $scope.allTeetimes.$save($scope.teetime).then(function(updatedTeetime){
-            loadPlayerScorecardsForTeetime($scope.teetime);
-            $scope.pairingModal.hide();
+            createPairingForSelectedMembers(selectedCourse, teeset, $scope.teetime).then(function(pairing){
+              $scope.teetime.pairings.push(pairing);
+              loadPlayerScorecardsForTeetime($scope.teetime);
+              $scope.pairingModal.hide();
+            });
           });
         }
-      });
     };
 
-    $scope.closeModalNoSave = function () {
+    $scope.closeModalNoSave = function() {
       $scope.pairingModal.hide();
     };
     //Cleanup the modal when we're done with it!
     $scope.$on('$destroy', function () {
       $scope.pairingModal.remove();
     });
+
+    $scope.loadTeesets = function() {
+      var selectedCourse = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
+      $scope.teesets = selectedCourse.teesets;
+    };
   });
 
   app.config(['$stateProvider', function ($stateProvider) {
@@ -175,7 +181,8 @@
         resolve: {
           teetime: function (Teetimes, $stateParams) {
             console.debug($stateParams);
-            return Teetimes.getById($stateParams.teetimeId);
+            var temp = Teetimes.getById($stateParams.teetimeId);
+            return temp;
           }
         }
       })

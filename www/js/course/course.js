@@ -16,6 +16,13 @@
     //console.info('Entering CourseCtrl with course '+JSON.stringify(course));
     $scope.course = course;
 
+    $scope.toggleHoles = function(teeset) {
+      teeset.show = !teeset.show;
+    };
+    $scope.areHolesShown = function(teeset) {
+      return teeset.show;
+    };
+
     $scope.save = function(thisCourse) {
       var courseRef = firebaseDataService.courses.child(thisCourse.name);
       courseRef.once("value", function(snapshot) {
@@ -82,12 +89,11 @@
        ];
        */
       return $firebaseArray(firebaseDataService.courses);
-      //list.$loaded().then(function(loadedList){return loadedList;});
     }
 
     function getById(courseId) {
-      var courseRef = firebaseDataService.courses.child(courseId);
-      return $firebaseObject(courseRef);
+      var ref = firebaseDataService.courses.child(courseId);
+      return $firebaseObject(ref);
     }
 
   });

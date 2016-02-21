@@ -1,7 +1,29 @@
 <ion-view view-title="ScoreCard">
   <ion-content>
-    <h2>{{scorecard.member.firstName}} - {{scorecard.course.name}}</h2>
-    <p> at {{scorecard.course.teetime}}</p>
+    <h4>{{player.firstName}} - {{course.name}}</h4>
+    <!--<p> at {{scorecard.course.teetime}}</p>-->
+    <!-- show the leaderboard? Add as sticky footer? -->
+    <ion-item class="item-stable" ng-click="toggleLeaderboard()" ng-class="{active: isLeaderboardShown()}">
+      <h3><i class="icon" ng-class="isLeaderboardShown() ? 'ion-minus' : 'ion-plus'"></i>&nbsp;Leaderboard</h3>
+
+    </ion-item>
+    <div class="list card item-accordion" ng-show="isLeaderboardShown()">
+      <ion-item>
+        <div class="bar bar-header bar-positive">
+          <span class="col-33">Name</span>
+          <span class="col-33">Index</span>
+          <span class="col-33">Total</span>
+        </div>
+
+      </ion-item>
+      <ion-item ng-repeat="player in pairing.players" class="row">
+        <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.scorecard.name}}</a>  </span>
+        <span class="col col-33">{{player.scorecard.courseIndex}}</span>
+        <span class="col col-33">{{player.scorecard.totalScore}}</span>
+      </ion-item>
+
+    </div>
+
     <ion-list>
       <ion-item>
         <div class="bar bar-header bar-positive row">
@@ -23,8 +45,11 @@
                     <input type="number" placeholder="Name" ng-model="score.score" ng-change="update(score)">
                   </label>
                 </div>
+              </div>
 
         </span>
-    </ion-item>
+      </ion-item>
+    </ion-list>
   </ion-content>
+
 </ion-view>

@@ -1,7 +1,5 @@
 <ion-view view-title="Tee Times">
   <ion-content>
-    <button ui-sref="app.newteetime">Add</button>
-
     <ion-list>
       <ion-item ng-repeat="teetime in teetimes" href="#/app/teetimes/{{teetime.$id}}">
         <div class="list card">
@@ -10,7 +8,6 @@
               <img src="{{teetime.course.image}}" >
             <h2 >{{teetime.course.name}}</h2>
           </div>
-
 
             <p><a href="tel:{{teetime.course.phone}}">{{teetime.course.phone}}</a></p>
             <p>{{teetime.playDate}} @ {{teetime.time}}</p>
@@ -22,4 +19,10 @@
       </ion-item>
     </ion-list>
   </ion-content>
+  <ion-footer-bar class="bar-stable">
+    <div class="buttons">
+      <button class="button button-positive ion-plus-circled" ui-sref="app.newteetime"> Add</button>
+    </div>
+  </ion-footer-bar>
+
 </ion-view>

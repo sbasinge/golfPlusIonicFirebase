@@ -1,4 +1,4 @@
-<ion-view view-title="Teetime">
+<ion-view view-title="Add Teetime">
   <ion-content>
     <div class="list">
 
@@ -6,8 +6,16 @@
         <div class="input-label">
           Select a course:
         </div>
-        <select ng-model="teetime.courseId">
+        <select ng-model="teetime.courseId" ng-change="loadTeesets()">
           <option ng-repeat="option in allCourses" value="{{option.$id}}">{{option.name}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Select a tee set:
+        </div>
+        <select ng-model="teetime.teeset">
+          <option ng-repeat="option in teesets" value="{{option.$id}}" >{{option.name}}</option>
         </select>
       </label>
 

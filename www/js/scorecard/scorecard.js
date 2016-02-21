@@ -33,7 +33,11 @@
       return $firebaseObject(firebaseDataService.scorecards.child(scorecardId));
     }
 
-    function add(course, teeset, member) {
+    function getByTeetimeId(teetimeId) {
+      return $firebaseObject(firebaseDataService.scorecards.child(scorecardId));
+    }
+
+    function add(course, teeset, member, teetime) {
       var newScorecard = new Scorecard();
       newScorecard.memberId = member.id;
       newScorecard.courseId = course.$id;
@@ -41,6 +45,7 @@
       newScorecard.courseIndex = 14;
       newScorecard.totalScore = 0;
       newScorecard.name = member.firstName;
+      newScorecard.teetimeId = teetime.key();
 
         _.each(teeset.holes, function (hole) {
         newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: 0});
@@ -60,6 +65,15 @@
     $scope.scorecard = scorecard;
     $scope.course = Courses.getById($scope.scorecard.courseId);
     $scope.player = Members.getById($scope.scorecard.memberId);
+    //get the pairings to build leaderboard
+    $scope.showLeaderboard = true;
+
+    $scope.toggleLeaderboard = function() {
+      $scope.showLeaderboard = !$scope.showLeaderboard;
+    };
+    $scope.isLeaderboardShown = function() {
+      return $scope.showLeaderboard;
+    };
 
     $scope.update = function(score) {
       //$scope.scorecard.totalScore = $scope.scorecard.scores.score;

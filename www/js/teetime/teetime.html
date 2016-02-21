@@ -2,7 +2,7 @@
   <ion-content>
     <h1>{{course.name}}</h1>
     <p>{{teetime.date}} @ {{teetime.time}}</p>
-    <button ng-click="openModal()">Add Pairing</button>
+    <button class="button" ng-click="openModal()">Add Pairing</button>
     <ion-list>
       <ion-item ng-repeat="pairing in teetime.pairings">
         <div class="list card">
