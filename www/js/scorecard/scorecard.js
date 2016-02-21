@@ -9,7 +9,8 @@
       list: list,
       getById: getById,
       Scorecard: Scorecard,
-      add: add
+      add: add,
+      findAllByByTeetimeId: findAllByByTeetimeId
     };
 
     return service;
@@ -33,8 +34,8 @@
       return $firebaseObject(firebaseDataService.scorecards.child(scorecardId));
     }
 
-    function getByTeetimeId(teetimeId) {
-      return $firebaseObject(firebaseDataService.scorecards.child(scorecardId));
+    function findAllByByTeetimeId(teetimeId) {
+      return $firebaseArray(firebaseDataService.scorecards.orderByChild('teetimeId').startAt(teetimeId).endAt(teetimeId));
     }
 
     function add(course, teeset, member, teetime) {
@@ -61,12 +62,13 @@
     console.log($stateParams);
     //expect a scorecardId which should get you courseId, member, etc
     //var scorecard = Scorecards.getById($stateParams.scorecardId).then();
-    $scope.allScorecards = Scorecards.list();
+    //$scope.allScorecards = Scorecards.list();
     $scope.scorecard = scorecard;
     $scope.course = Courses.getById($scope.scorecard.courseId);
     $scope.player = Members.getById($scope.scorecard.memberId);
     //get the pairings to build leaderboard
     $scope.showLeaderboard = true;
+    $scope.scorecards = Scorecards.findAllByByTeetimeId(scorecard.teetimeId);
 
     $scope.toggleLeaderboard = function() {
       $scope.showLeaderboard = !$scope.showLeaderboard;

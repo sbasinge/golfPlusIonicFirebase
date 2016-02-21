@@ -16,10 +16,10 @@
         </div>
 
       </ion-item>
-      <ion-item ng-repeat="player in pairing.players" class="row">
-        <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.scorecard.name}}</a>  </span>
-        <span class="col col-33">{{player.scorecard.courseIndex}}</span>
-        <span class="col col-33">{{player.scorecard.totalScore}}</span>
+      <ion-item ng-repeat="scorecard in scorecards" class="row">
+        <span class="col col-33"><a href="#/app/scorecard/{{scorecardId}}">{{scorecard.name}}</a>  </span>
+        <span class="col col-33">{{scorecard.courseIndex}}</span>
+        <span class="col col-33">{{scorecard.totalScore}}</span>
       </ion-item>
 
     </div>

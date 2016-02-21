@@ -61,7 +61,7 @@
 
   app.controller('TeetimeCtrl', function ($scope, $stateParams, $ionicModal, teetime, Courses, Pairings, Members, Scorecards, Teetimes, $q, $state) {
     $scope.teetime = teetime;
-    loadPlayerScorecardsForTeetime($scope.teetime);
+    $scope.scorecards = Scorecards.findAllByByTeetimeId(teetime.$id);
     $scope.allCourses = Courses.list();
     $scope.allTeetimes = Teetimes.list();
     $scope.course = _.findWhere($scope.allCourses,{$id: $scope.teetime.courseId});
@@ -73,13 +73,17 @@
     $scope.members = Members.list();
 
     function loadPlayerScorecardsForTeetime(teetime) {
+      var retVal =  Scorecards.findAllByByTeetimeId(teetime.teetimeId);
+      return retVal;
+/*
       _.each(teetime.pairings,function(pairing) { //populate player scorecards for the page
         _.each(pairing.players,function(player){
           player.scorecard = Scorecards.getById(player.scorecardId);
         });
       });
-
+*/
     }
+
     $ionicModal.fromTemplateUrl('js/teetime/pairing-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'

@@ -2,9 +2,8 @@
   <ion-content>
     <h1>{{course.name}}</h1>
     <p>{{teetime.date}} @ {{teetime.time}}</p>
-    <button class="button" ng-click="openModal()">Add Pairing</button>
+    <button class="button" ng-click="openModal()">Add Players</button>
     <ion-list>
-      <ion-item ng-repeat="pairing in teetime.pairings">
         <div class="list card">
           <ion-item>
             <div class="bar bar-header bar-positive">
@@ -14,15 +13,18 @@
             </div>
 
           </ion-item>
-          <ion-item ng-repeat="player in pairing.players" class="row">
-            <span class="col col-33"><a href="#/app/scorecard/{{player.scorecardId}}">{{player.scorecard.name}}</a>  </span>
-            <span class="col col-33">{{player.scorecard.courseIndex}}</span>
-            <span class="col col-33">{{player.scorecard.totalScore}}</span>
+          <ion-item ng-repeat="scorecard in scorecards" class="row">
+            <span class="col col-33"><a href="#/app/scorecard/{{scorecard.$id}}">{{scorecard.name}}</a>  </span>
+            <span class="col col-33">{{scorecard.courseIndex}}</span>
+            <span class="col col-33">{{scorecard.totalScore}}</span>
           </ion-item>
 
         </div>
-      </ion-item>
     </ion-list>
 
   </ion-content>
+  <ion-nav-buttons side="right">
+    <button class="button button-balanced" ng-click="openModal()">Add Players</button>
+  </ion-nav-buttons>
+
 </ion-view>
