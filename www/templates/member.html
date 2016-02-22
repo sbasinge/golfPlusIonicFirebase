@@ -2,8 +2,31 @@
   <ion-content>
     <div class="item item-body">
       <img src="{{member.avatar}}">
-      <h2>{{member.firstName}} {{member.lastName}}</h2>
-      <p>Handicap: {{member.handicap}}</p>
+      <div class="list">
+
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="First Name" ng-model="member.firstName">
+          </label>
+        </div>
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Last Name" ng-model="member.lastName">
+          </label>
+        </div>
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="number" placeholder="Handicap" ng-model="member.handicap">
+          </label>
+        </div>
+      </div>
+
     </div>
   </ion-content>
+  <ion-footer-bar class="bar-stable">
+    <div class="buttons">
+      <button class="button button-positive ion-plus-circled" ng-click="save()"> Save</button>
+    </div>
+  </ion-footer-bar>
+
 </ion-view>

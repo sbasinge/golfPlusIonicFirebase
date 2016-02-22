@@ -1,22 +1,25 @@
 <ion-view view-title="Teetime">
   <ion-content>
     <h1>{{course.name}}</h1>
-    <p>{{teetime.date}} @ {{teetime.time}}</p>
-    <button class="button" ng-click="openModal()">Add Players</button>
+    <p>{{teetime.playDate}} @ {{teetime.time}}</p>
     <ion-list>
         <div class="list card">
           <ion-item>
             <div class="bar bar-header bar-positive">
-              <span class="col-33">Name</span>
-              <span class="col-33">Index</span>
-              <span class="col-33">Total</span>
+              <span class="col">Name</span>
+              <span class="col">Index</span>
+              <span class="col">Total</span>
+              <span class="col">Net</span>
+              <span class="col">Thru</span>
             </div>
 
           </ion-item>
           <ion-item ng-repeat="scorecard in scorecards" class="row">
-            <span class="col col-33"><a href="#/app/scorecard/{{scorecard.$id}}">{{scorecard.name}}</a>  </span>
-            <span class="col col-33">{{scorecard.courseIndex}}</span>
-            <span class="col col-33">{{scorecard.totalScore}}</span>
+            <span class="col col"><a href="#/app/scorecard/{{scorecard.$id}}">{{scorecard.name}}</a>  </span>
+            <span class="col col">{{scorecard.courseIndex}}</span>
+            <span class="col col">{{scorecard.totalScore}}</span>
+            <span class="col col">{{scorecard.overUnderNet}}</span>
+            <span class="col">{{scorecard.thru}}</span>
           </ion-item>
 
         </div>

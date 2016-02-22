@@ -79,6 +79,10 @@ angular.module('golfplus.controllers', [])
   })
   .controller('MemberCtrl', function ($scope, $stateParams, Members) {
     $scope.member = Members.getById($stateParams.memberId);
+
+    $scope.save = function() {
+      Members.list().$save($scope.member);
+    };
   })
 
 

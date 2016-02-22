@@ -21,7 +21,7 @@
       this.playDate = new Date().toISOString();
       this.time = '9 am';
       this.totalScore = 0;
-      this.new = true;
+      this.thru = 0;
       this.scores = [];
     }
 
@@ -43,13 +43,14 @@
       newScorecard.memberId = member.id;
       newScorecard.courseId = course.$id;
       newScorecard.teeset = teeset.name;
-      newScorecard.courseIndex = 14;
+      newScorecard.courseIndex = Math.round(((member.handicap * teeset.slope)/113));
       newScorecard.totalScore = 0;
+      newScorecard.totalNet = 0;
       newScorecard.name = member.firstName;
       newScorecard.teetimeId = teetime.key();
 
         _.each(teeset.holes, function (hole) {
-        newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: 0});
+        newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: 0, net: 0});
       });
       return list().$add(newScorecard);
       //return newScorecard;
@@ -78,13 +79,39 @@
     };
 
     $scope.update = function(score) {
-      //$scope.scorecard.totalScore = $scope.scorecard.scores.score;
       var total = 0;
+      var totalNet = 0;
+      var overUnder = 0;
+      var overUnderNet = 0;
+      var thru = 0;
       _.each($scope.scorecard.scores,function(score){
-        total += score.score;
+        if (score.score > 0) {
+          total += score.score;
+          //if courseIndex is 10 then handicap holes 1 thru 10 get 1 stroke
+          //if course index is 23 then handicap holes 1 thru 5 get 2 strokes and 6 thru 18 get 1
+          //courseIndex/18 +
+          var adjustment = 0;
+          var courseIndex = $scope.scorecard.courseIndex;
+          if (courseIndex >= 18) {
+            adjustment = 1;
+            courseIndex -= 18;
+          }
+          if (courseIndex < score.handicap) {
+            score.net = score.score - adjustment;
+          } else {
+            score.net = score.score - 1 - adjustment;
+          }
+          totalNet += score.net;
+          overUnderNet += (score.net - score.par);
+          overUnder += (score.score - score.par);
+          thru++;
+        }
       });
       $scope.scorecard.totalScore = total;
-
+      $scope.scorecard.totalNet = totalNet;
+      $scope.scorecard.overUnder = overUnder;
+      $scope.scorecard.overUnderNet = overUnderNet;
+      $scope.scorecard.thru = thru;
       $scope.scorecard.$save();
     };
   });
