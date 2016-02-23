@@ -50,7 +50,7 @@
       newScorecard.teetimeId = teetime.key();
 
         _.each(teeset.holes, function (hole) {
-        newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: 0, net: 0});
+        newScorecard.scores.push({holeNumber: hole.number, handicap: hole.handicap, par: hole.par, score: null, net: 0});
       });
       return list().$add(newScorecard);
       //return newScorecard;

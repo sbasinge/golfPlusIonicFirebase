@@ -1,4 +1,12 @@
 {
   "name": "golfPlusIonicFirebase",
-  "app_id": "7ab80fd1"
+  "app_id": "7ab80fd1",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

@@ -1,56 +1,56 @@
 <ion-view view-title="ScoreCard">
+  <h4>{{player.firstName}} - {{course.name}}</h4>
+
   <div class="bar bar-subheader">
     <ion-item class="item-stable" ng-click="toggleLeaderboard()" ng-class="{active: isLeaderboardShown()}">
       <h3><i class="icon" ng-class="isLeaderboardShown() ? 'ion-minus' : 'ion-plus'"></i>&nbsp;Leaderboard</h3>
-      <div class="list card item-accordion" ng-show="isLeaderboardShown()">
+      <div class="list item-accordion" ng-show="isLeaderboardShown()">
         <ion-item>
           <div class="bar bar-header bar-positive">
             <span class="col">Name</span>
             <span class="col">Net</span>
             <span class="col">Thru</span>
           </div>
-
         </ion-item>
         <ion-item ng-repeat="scorecard in scorecards" class="row">
-          <span class="col"><a href="#/app/scorecard/{{scorecardId}}">{{scorecard.name}}</a>  </span>
-          <span class="col">{{scorecard.overUnderNet}}</span>
-          <span class="col">{{scorecard.thru}}</span>
-        </ion-item>
+            <span class="col"><a href="#/app/scorecard/{{scorecardId}}">{{scorecard.name}}</a>  </span>
+            <span class="col">{{scorecard.overUnderNet}}</span>
+            <span class="col">{{scorecard.thru}}</span>
+       </ion-item>
 
       </div>
 
     </ion-item>
   </div>
-  <ion-content has-subheader="true">
-    <h4>{{player.firstName}} - {{course.name}}</h4>
+  <ion-content has-subheader="true" style="margin-top: 50px;">
     <!--<p> at {{scorecard.course.teetime}}</p>-->
 
-    <ion-list>
-      <ion-item>
-        <div class="bar bar-header bar-positive row">
-          <span class="col">Hole</span>
-          <span class="col">Par</span>
-          <span class="col">Hdcp</span>
-          <span class="col">Score</span>
-          <span class="col">Net</span>
-        </div>
-      </ion-item>
+    <ion-list >
+      <div class="item item-divider row">
+        <span class="col col-20">Hole</span>
+        <span class="col col-20">Par</span>
+        <span class="col col-20">Hdcp</span>
+        <span class="col col-25">Score</span>
+        <span class="col col-15">Net</span>
+      </div>
+      <ion-list-divder>
+      </ion-list-divder>
       <ion-item ng-repeat="score in scorecard.scores" class="row">
-        <span class="col">{{score.holeNumber}}</span>
-        <span class="col">{{score.par}}</span>
-        <span class="col">{{score.handicap}}</span>
-        <span class="col">
+        <span class="col col-20">{{score.holeNumber}}</span>
+        <span class="col col-20">{{score.par}}</span>
+        <span class="col col-20">{{score.handicap}}</span>
+        <span class="col col-25">
               <div class="list">
 
                 <div class="item item-input-inset">
                   <label class="item-input-wrapper">
-                    <input type="number" placeholder="Name" ng-model="score.score" ng-change="update(score)">
+                    <input type="number" ng-model="score.score" ng-change="update(score)" pattern="[0-9]*" >
                   </label>
                 </div>
               </div>
 
         </span>
-        <span class="col">{{score.net}}</span>
+        <span class="col col-15">{{score.net}}</span>
       </ion-item>
     </ion-list>
   </ion-content>

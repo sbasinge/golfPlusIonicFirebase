@@ -26,3 +26,4 @@ Add SASS and theme a bit
 npm install
 bower install
 ionic serve
+ionic setup sass
