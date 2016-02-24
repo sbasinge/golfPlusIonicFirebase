@@ -68,7 +68,7 @@
     $scope.course = Courses.getById($scope.scorecard.courseId);
     $scope.player = Members.getById($scope.scorecard.memberId);
     //get the pairings to build leaderboard
-    $scope.showLeaderboard = true;
+    $scope.showLeaderboard = false;
     $scope.scorecards = Scorecards.findAllByByTeetimeId(scorecard.teetimeId);
 
     $scope.toggleLeaderboard = function() {

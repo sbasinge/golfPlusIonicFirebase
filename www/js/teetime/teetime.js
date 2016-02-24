@@ -52,10 +52,10 @@
   });
 
 
-  app.controller('TeetimesCtrl', function ($scope, teetimes, Courses) {
+  app.controller('TeetimesCtrl', function ($scope, teetimes, courses) {
     $scope.teetimes = teetimes;
     _.each($scope.teetimes, function (teetime) {
-      teetime.course = Courses.getById(teetime.courseId);
+      teetime.course = _.findWhere(courses,{$id: teetime.courseId});
     });
   });
 
@@ -169,7 +169,10 @@
         resolve: {
           teetimes: function (Teetimes, $stateParams) {
             console.debug($stateParams);
-            return Teetimes.list();
+            return Teetimes.list().$loaded();
+          },
+          courses: function(Courses) {
+            return Courses.list().$loaded();
           }
         }
       })

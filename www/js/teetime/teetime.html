@@ -15,7 +15,7 @@
 
           </ion-item>
           <ion-item ng-repeat="scorecard in scorecards" class="row">
-            <span class="col col"><a href="#/app/scorecard/{{scorecard.$id}}">{{scorecard.name}}</a>  </span>
+            <span class="col col"><a href="#/app/scorecard/{{scorecard.$id}}" class="button">{{scorecard.name}}</a>  </span>
             <span class="col col">{{scorecard.courseIndex}}</span>
             <span class="col col">{{scorecard.totalScore}}</span>
             <span class="col col">{{scorecard.overUnderNet}}</span>
