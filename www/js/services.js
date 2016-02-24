@@ -47,12 +47,12 @@ function Members() {
 
   function list() {
     return [
-      {id: 1, firstName: 'Tom', lastName: 'Kirk', handicap: 20, avatar:''},
-      {id: 2, firstName: 'Rich', lastName: 'Jenks', handicap: 20, avatar:''},
-      {id: 3, firstName: 'Steve', lastName: 'Hawley', handicap: 8, avatar:''},
-      {id: 4, firstName: 'Jeff', lastName: 'McCorkle', handicap: 14, avatar:''},
-      {id: 5, firstName: 'Scott', lastName: 'Kern', handicap: 19, avatar:''},
-      {id: 6, firstName: 'Scott', lastName: 'Basinger', handicap: 18, avatar:''},
+      {id: 1, firstName: 'Tom', lastName: 'Kirk', handicap: 20.9, avatar:''},
+      {id: 2, firstName: 'Rich', lastName: 'Jenks', handicap: 18.5, avatar:''},
+      {id: 3, firstName: 'Steve', lastName: 'Hawley', handicap: 7.8, avatar:''},
+      {id: 4, firstName: 'Jeff', lastName: 'McCorkle', handicap: 13.4, avatar:''},
+      {id: 5, firstName: 'Scott', lastName: 'Kern', handicap: 18.3, avatar:''},
+      {id: 6, firstName: 'Scott', lastName: 'Basinger', handicap: 17.0, avatar:''}
     ];
 
   }
